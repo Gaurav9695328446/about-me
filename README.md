@@ -1,36 +1,117 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Gaurav Kumar Arya — Portfolio
+
+SEO-optimised personal portfolio for **Gaurav Kumar Arya**, Frontend Architect with 9+ years of experience.
+
+## Tech Stack
+
+| Layer | Choice |
+|---|---|
+| Framework | Next.js 16 (App Router) + TypeScript |
+| Styling | Tailwind CSS v4 |
+| Animations | Framer Motion v12 |
+| Forms | React Hook Form + Zod |
+| Icons | Lucide React + inline SVG brand icons |
+| Hosting | Vercel |
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Project Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+src/
+├── app/
+│   ├── layout.tsx          # Root layout · metadata · JSON-LD
+│   ├── page.tsx            # Homepage
+│   ├── globals.css         # Tailwind v4 theme + custom utilities
+│   ├── sitemap.ts          # Auto-generated sitemap
+│   ├── robots.ts           # robots.txt
+│   └── api/contact/
+│       └── route.ts        # Contact form API (rate-limited + XSS-sanitized)
+├── components/
+│   ├── layout/
+│   │   ├── Navbar.tsx      # Sticky nav with scroll-aware styling
+│   │   └── Footer.tsx
+│   ├── sections/
+│   │   ├── Hero.tsx
+│   │   ├── ImpactSnapshot.tsx
+│   │   ├── Experience.tsx
+│   │   ├── Projects.tsx
+│   │   ├── Skills.tsx
+│   │   ├── Blog.tsx
+│   │   └── Contact.tsx
+│   └── ui/
+│       ├── AnimatedCounter.tsx
+│       ├── Badge.tsx
+│       ├── Button.tsx
+│       ├── SectionWrapper.tsx
+│       └── icons.tsx       # Brand SVGs (GitHub, LinkedIn, Dev.to, Medium)
+├── data/
+│   ├── personal.ts
+│   ├── experience.ts
+│   ├── projects.ts
+│   └── skills.ts
+└── lib/
+    └── utils.ts
+```
 
-## Learn More
+## Deployment
 
-To learn more about Next.js, take a look at the following resources:
+Deploy instantly with Vercel:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+npx vercel
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Security headers (CSP, HSTS, X-Frame-Options, etc.) are pre-configured in `vercel.json`.
 
-## Deploy on Vercel
+## Contact Form — Email Provider Setup
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+The `/api/contact` route validates and sanitizes inputs but needs an email provider to actually send mail.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+**Option A – Resend (recommended):**
+```bash
+npm install resend
+```
+Add to `.env.local`:
+```
+RESEND_API_KEY=re_xxxxxxxxxxxx
+```
+Then uncomment the Resend block in `src/app/api/contact/route.ts`.
+
+**Option B – Nodemailer (SMTP):**
+Add SMTP credentials to `.env.local` and uncomment the Nodemailer block.
+
+See `.env.local.example` for all available environment variables.
+
+## Resume PDF
+
+Place your resume at `public/gaurav-arya-resume.pdf`. The hero and navbar "Resume" buttons point there.
+
+## OG Image
+
+Add an Open Graph image at `public/og-image.png` (1200×630 px) to complete SEO setup.
+
+## Build
+
+```bash
+npm run build   # Production build (Turbopack)
+npm start       # Start production server
+```
+
+## Color Palette
+
+| Token | Hex | Usage |
+|---|---|---|
+| Navy | `#1a2639` | Primary background |
+| Navy Dark | `#0d1520` | Deepest background |
+| Gold | `#d4af37` | Accent, CTAs, highlights |
+| Gold Light | `#e8c84a` | Hover state |
+| Gray 300 | `#d1d5db` | Body text |
+| Gray 400 | `#9ca3af` | Muted text |
